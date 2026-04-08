@@ -15,7 +15,7 @@ module "TEMPLATE" {
   source = "./modules/instance_template"
   sg_master = module.SG.security_group_master
   ami_id = var.ami_id
-  scripts = "./scripts/user-data-master.sh"
+  scripts = "./scripts/user-data.sh"
   subnet_id = module.VPC.SUBNET1_ID
 }
 
@@ -25,7 +25,7 @@ module "EC2" {
   ami_id = var.ami_id
   subnet_id = module.VPC.SUBNET1_ID
   sg_worker = module.SG.security_group_worker
-  user-data-worker = "./scripts/user-data-worker.sh"
+  user-data-worker = "./scripts/user-data.sh"
 }
 
 module "NLB" {
