@@ -20,7 +20,7 @@ resource "aws_instance" "WORKER" {
     volume_size = 50
     volume_type = "gp3"
   }
-  user_data = var.user-data-worker
+  user_data = filebase64(var.user-data-worker)
   tags = {
     Name = "Worker_node",
     terraform = "true"
