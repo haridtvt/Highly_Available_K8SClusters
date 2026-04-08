@@ -2,8 +2,8 @@ output "VPC_ID" {
   value = module.VPC.VPC_ID
 }
 
-output "SUBNET_CLUSTER" {
-  value = module.VPC.SUBNET1
+output "nlb_dns" {
+  value = module.NLB.NLB_DNS
 }
 
 output "master_ids" {
