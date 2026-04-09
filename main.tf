@@ -9,11 +9,20 @@ module "network" {
   public_cidr_block_1c = "10.220.13.0/24"
 }
 
+module "bastion_host" {
+  depends_on = [module.network]
+  source = "./modules/bastion_host"
+  ami_id = var.ami_id
+  public_subnet = module.network.subnet_public_zone1a_id
+  vpc_id = module.network.vpc_id
+}
+
 module "security_groups" {
   depends_on = [module.network]
   source     = "./modules/security_group"
   vpc_id = module.network.vpc_id
   vpc_cidr = module.network.vpc_cidr
+  security_group_bastion = module.bastion_host.sg_bastion_id
 }
 
 module "iam_role" {
