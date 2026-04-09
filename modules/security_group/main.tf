@@ -56,7 +56,7 @@ resource "aws_vpc_security_group_ingress_rule" "tcp_22" {
   security_group_id = each.value
   from_port         = 22
   to_port           = 22
-  cidr_ipv4         = "0.0.0.0/0"
+  referenced_security_group_id = var.security_group_bastion
   description       = "allow SSH port"
 }
 
