@@ -1,11 +1,3 @@
-output "NLB_ID" {
-  value = aws_lb.NLB.id
-}
-
-output "NLB_ARN" {
-  value = aws_lb.NLB.arn
-}
-
-output "NLB_DNS" {
-  value = aws_lb.NLB.dns_name
+output "target_group_alb_worker_arn" {
+  value = aws_lb_target_group.application_lb_target.arn
 }
