@@ -1,3 +1,11 @@
-output "template_id" {
-  value = aws_launch_template.k8s_template.id
+output "master_template" {
+  value = aws_launch_template.master_template.id
+}
+
+output "ectd_template" {
+  value = aws_launch_template.etcd_template.id
+}
+
+output "worker_template" {
+  value = aws_launch_template.worker_template.id
 }
