@@ -2,10 +2,7 @@ resource "aws_launch_template" "master_template" {
   name_prefix   = "k8s-master-"
   image_id      = var.ami_id
   instance_type = "t3.medium"
-  network_interfaces {
-    associate_public_ip_address = false
-    security_groups = [var.sg_master_id]
-  }
+  vpc_security_group_ids = [var.sg_master_id]
   iam_instance_profile {
     name = var.iam_instance_profile_name
   }
@@ -31,10 +28,7 @@ resource "aws_launch_template" "worker_template" {
   name_prefix   = "k8s-worker-"
   image_id      = var.ami_id
   instance_type = "t3.small"
-  network_interfaces {
-    associate_public_ip_address = false
-    security_groups = [var.sg_worker_id]
-  }
+  vpc_security_group_ids = [var.sg_worker_id]
   iam_instance_profile {
     name = var.iam_instance_profile_name
   }
@@ -60,10 +54,7 @@ resource "aws_launch_template" "etcd_template" {
   name_prefix   = "k8s-etcd-"
   image_id      = var.ami_id
   instance_type = "t3.small"
-  network_interfaces {
-    associate_public_ip_address = false
-    security_groups = [var.sg_etcd_id]
-  }
+  vpc_security_group_ids = [var.sg_etcd_id]
   iam_instance_profile {
     name = var.iam_instance_profile_name
   }
