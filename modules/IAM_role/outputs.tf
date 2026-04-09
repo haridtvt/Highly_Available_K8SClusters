@@ -1,3 +1,3 @@
-output "aws_iam_role" {
-  value = aws_iam_role.ssm_role.name
+output "iam_instance_profile_name" {
+  value = aws_iam_instance_profile.ssm_profile.name
 }
