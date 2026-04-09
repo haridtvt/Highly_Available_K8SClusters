@@ -1,0 +1,35 @@
+#!/bin/bash
+set -e
+
+## Control plane
+free -m
+lsmod | grep br_netfilter
+sysctl net.bridge.bridge-nf-call-iptables
+systemctl is-active containerd
+kubeadm version && kubelet --version
+nc -zv ${private_ip_etcd} 2379
+nc -zv ${dns_nlb_external} 6443
+
+
+## etcd clustes
+free -m
+lsmod | grep br_netfilter
+sysctl net.bridge.bridge-nf-call-iptables
+etcd --version
+ls -l /etc/systemd/system/etcd.service
+sudo netstat -tunlp	| grep 2379
+sudo netstat -tunlp	| grep 2380
+ls -ld /var/lib/etcd
+
+## Worker node
+free -m
+lsmod | grep br_netfilter
+sysctl net.bridge.bridge-nf-call-iptables
+systemctl is-active containerd
+systemctl status kubelet
+nc -zv ${ip_control} 6443
+
+## Troubleshooting
+sudo tail -f /var/log/cloud-init-output.log
+sudo journalctl -u etcd.service -f
+sudo journalctl -u containerd -f
