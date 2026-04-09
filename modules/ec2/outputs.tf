@@ -21,3 +21,11 @@ output "etcd_ec2_id1" {
 output "etcd_ec2_id2" {
   value = aws_instance.ec2_etcd[2].id
 }
+
+output "master_ip" {
+  value = aws_instance.ec2_master[*].private_ip
+}
+
+output "etcd_ip" {
+  value = aws_instance.ec2_etcd[*].private_ip
+}
