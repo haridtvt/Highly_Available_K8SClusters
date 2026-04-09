@@ -30,12 +30,56 @@ module "launch_template" {
   sg_master_id = module.security_groups.security_group_master
   sg_worker_id = module.security_groups.security_group_worker
   ami_id = var.ami_id
-  iam_instance_profile_name = module.iam_role.aws_iam_role
+  iam_instance_profile_name = module.iam_role.iam_instance_profile_name
 }
 
 module "ec2" {
+  depends_on = [module.launch_template]
   source     = "./modules/ec2"
   template_etcd = module.launch_template.ectd_template
   template_master = module.launch_template.master_template
-  private_subnet_ids = [module.network.subnet_private_zone1a, module.network.subnet_private_zone1b, module.network.subnet_private_zone1c]
+  private_subnet_ids = [
+    module.network.subnet_private_zone1a_id,
+    module.network.subnet_private_zone1b_id,
+    module.network.subnet_private_zone1c_id
+  ]
+}
+
+module "load_balancer" {
+  depends_on = [module.ec2]
+  source = "./modules/load_balancer"
+  vpc_id = module.network.vpc_id
+  subnet_private_ids = [
+    module.network.subnet_private_zone1a_id,
+    module.network.subnet_private_zone1b_id,
+    module.network.subnet_private_zone1c_id
+  ]
+  subnet_public_ids = [
+    module.network.subnet_public_zone1a_id,
+    module.network.subnet_public_zone1b_id,
+    module.network.subnet_public_zone1c_id
+  ]
+  master_instance_ids = [
+    module.ec2.master_ec2_id0,
+    module.ec2.master_ec2_id1,
+    module.ec2.master_ec2_id2
+  ]
+  etcd_instance_ids = [
+    module.ec2.etcd_ec2_id0,
+    module.ec2.etcd_ec2_id1,
+    module.ec2.etcd_ec2_id2
+  ]
+  sg_application_lb = module.security_groups.security_group_lb
+}
+
+module "asg_worker" {
+  depends_on = [module.load_balancer]
+  source = "./modules/auto_scaling_group"
+  public_subnet_ids = [
+    module.network.subnet_public_zone1a_id,
+    module.network.subnet_public_zone1b_id,
+    module.network.subnet_public_zone1c_id
+  ]
+  target_group_arn = module.load_balancer.target_group_alb_worker_arn
+  template_worker = module.launch_template.worker_template
 }
