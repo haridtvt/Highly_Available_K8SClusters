@@ -29,6 +29,7 @@ resource "aws_launch_template" "worker_template" {
   image_id      = var.ami_id
   instance_type = "t3.small"
   vpc_security_group_ids = [var.sg_worker_id]
+  key_name = "K8s"
   iam_instance_profile {
     name = var.iam_instance_profile_name
   }
