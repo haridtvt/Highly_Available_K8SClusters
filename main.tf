@@ -84,10 +84,10 @@ module "load_balancer" {
 module "asg_worker" {
   depends_on = [module.load_balancer]
   source = "./modules/auto_scaling_group"
-  public_subnet_ids = [
-    module.network.subnet_public_zone1a_id,
-    module.network.subnet_public_zone1b_id,
-    module.network.subnet_public_zone1c_id
+  private_subnet_ids =[
+    module.network.subnet_private_zone1a_id,
+    module.network.subnet_private_zone1b_id,
+    module.network.subnet_private_zone1c_id
   ]
   target_group_arn = module.load_balancer.target_group_alb_worker_arn
   template_worker = module.launch_template.worker_template

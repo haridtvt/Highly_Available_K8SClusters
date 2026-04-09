@@ -9,3 +9,15 @@ output "master_ips" {
 output "etcd_ip" {
   value = module.ec2.etcd_ip
 }
+
+output "external_dns_nlb" {
+  value = module.load_balancer.alb_external_dns
+}
+
+output "internal_dns_nlb" {
+  value = module.load_balancer.nlb_internal_dns
+}
+
+output "alb_dns" {
+  value = module.load_balancer.alb_external_dns
+}
