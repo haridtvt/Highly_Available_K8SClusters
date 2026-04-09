@@ -3,7 +3,7 @@ resource "aws_autoscaling_group" "worker_asg" {
   desired_capacity    = 3
   max_size            = 6
   min_size            = 3
-  vpc_zone_identifier = var.public_subnet_ids
+  vpc_zone_identifier = var.private_subnet_ids
 
   launch_template {
     id = var.template_worker
