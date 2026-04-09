@@ -1,5 +1,3 @@
-variable "template" {}
-variable "ami_id" {}
-variable "subnet_id" {}
-variable "sg_worker" {}
-variable "user-data-worker" {}
+variable "template_master" {}
+variable "private_subnet_ids" {}
+variable "template_etcd" {}

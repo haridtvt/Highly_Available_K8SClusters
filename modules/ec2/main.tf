@@ -1,28 +1,25 @@
-resource "aws_instance" "MASTER" {
+resource "aws_instance" "ec2_master" {
   count = 3
   launch_template {
-    id      = var.template
+    id      = var.template_master
     version = "$Latest"
   }
+  subnet_id = var.private_subnet_ids[count.index]
   key_name = "K8s"
   tags = {
     Name = "k8s-master-${count.index + 1}"
   }
 }
 
-resource "aws_instance" "WORKER" {
-  ami           = var.ami_id
-  instance_type = "t3.medium"
-  subnet_id     = var.subnet_id
-  key_name = "K8s"
-  vpc_security_group_ids = [var.sg_worker]
-  root_block_device {
-    volume_size = 50
-    volume_type = "gp3"
+resource "aws_instance" "ec2_etcd" {
+  count = 3
+  launch_template {
+    id      = var.template_etcd
+    version = "$Latest"
   }
-  user_data = filebase64(var.user-data-worker)
+  subnet_id = var.private_subnet_ids[count.index]
+  key_name = "K8s"
   tags = {
-    Name = "Worker_node",
-    terraform = "true"
+    Name = "k8s-etcd-${count.index + 1}"
   }
 }
