@@ -1,0 +1,12 @@
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: ClusterConfiguration
+kubernetesVersion: v1.35.3
+controlPlaneEndpoint: "application-lb-1029559878.ap-southeast-1.elb.amazonaws.com:6443"
+etcd:
+  external:
+    endpoints:
+      - http://10.220.1.41:2379
+      - http://10.220.2.191:2379
+      - http://10.220.3.28:2379
+networking:
+  podSubnet: "10.244.0.0/16"
