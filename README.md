@@ -1,3 +1,6 @@
+<img width="1014" height="530" alt="chart" src="https://github.com/user-attachments/assets/41e28aab-2cfd-4ad1-aff4-8d90c050ed5b" />
+
+
 # Infrastructure Provisioning (Terraform)
 
 This repository contains Terraform configuration and deployment guidance for provisioning a Kubernetes cluster with a bastion host, load balancers, and an etcd cluster.
@@ -52,7 +55,7 @@ Use the bastion host to access and configure all cluster nodes.
 
 ## etcd Cluster Setup
 
-> ⚠️ Replace variables with your actual private IPs of etcd nodes and appropriate cluster names.
+> Replace variables with your actual private IPs of etcd nodes and appropriate cluster names.
 
 Create the systemd service for etcd:
 
