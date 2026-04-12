@@ -1,4 +1,4 @@
-<img width="1212" height="620" alt="chart_cluster" src="https://github.com/user-attachments/assets/e3901c92-4bbf-47b6-b209-ff5f55f1ee97" />
+<img width="1182" height="597" alt="Chart" src="https://github.com/user-attachments/assets/33b13f13-5228-4a7f-95c5-9d6b88990c73" />
 
 
 # Infrastructure Provisioning (Terraform)
